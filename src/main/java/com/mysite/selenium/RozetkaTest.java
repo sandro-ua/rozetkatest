@@ -25,8 +25,6 @@ public class RozetkaTest {
         LoginPage login = home.navigateToLoginPage(driver);
         login.performLogin("qatestermailbox@gmail.com", "q1w2e3");
 
-
-
     }
 
 
