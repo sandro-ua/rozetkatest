@@ -15,7 +15,6 @@ class HomePage
     public static WebDriver driver;
     public static final String LOC_LNK_privateCabinet = "signin";
     public static final String LOC_LNK_searchInput = "text";
-    //public static final String TTL_homePageTitle = "»нтернет-магазин ROZETKAЩ: фототехника, видеотехника, аудиотехника, компьютеры и компьютерные комплектующие";
 
 
     public HomePage (WebDriver driver)
@@ -38,5 +37,12 @@ class HomePage
         return new LoginPage (driver);
     }
 
+    public CategoryPage navigateToSpecificCategory (WebDriver driver)
+    {
+
+
+
+        return new CategoryPage();
+    }
 
 }

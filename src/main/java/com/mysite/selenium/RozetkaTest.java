@@ -1,5 +1,4 @@
 package com.mysite.selenium;
-import com.google.common.base.Verify;
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
 import org.junit.rules.TestName;
@@ -10,12 +9,13 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class RozetkaTest {
@@ -23,9 +23,17 @@ public class RozetkaTest {
     public static String LNK_START_LINK = "http://rozetka.com.ua/";
     public static WebDriver driver = new FirefoxDriver();
 
-    public static String TXT_NOT_VALID_USERNAME = "q1w2e3@gmail.com";
-    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd_HH-mm-ss";
 
+    public static final String VALID_USERNAME = "qatestermailbox@gmail.com";
+    public static final String INVALID_PASSWORD = "a";
+    public static final String TXT_NOT_VALID_USERNAME = "q1w2e373@gmail.com";
+    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd_HH-mm-ss";
+    public static final String USER_NOT_EXIST_MESSAGE_1 = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ Р»РѕРіРёРЅРѕРј ";
+    public static final String USER_NOT_EXIST_MESSAGE_2 = " РЅРµ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ";
+    public static final String PASSWORD_IS_INCORRECT = "Р’РІРµРґРµРЅ РЅРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ!";
+
+    //logger
+    private final Logger slf4jLogger = LoggerFactory.getLogger(RozetkaTest.class);
 
     // take screenshots
     public void takeScreenshot(String testName) {
@@ -80,24 +88,35 @@ public class RozetkaTest {
         HomePage home = new HomePage(driver);
         LoginPage login = home.navigateToLoginPage(driver);
         login.performLogin("qatestermailbox@gmail.com", "q1w2e3");
+        slf4jLogger.info("user is logged in");
         driver.quit();
 
     }
 
     @Test
-    public void LoginWithWrongUsername()
+    public void LoginWithNotExistingUsername()
 
     {
         HomePage home = new HomePage(driver);
         LoginPage login = home.navigateToLoginPage(driver);
         login.performLogin(TXT_NOT_VALID_USERNAME, "q1w2e3");
-        //WebElement emailHint = driver.findElement(By.name("email_hint"));
-        WebElement emailHint2 = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name("email_hint")));
-        Assert.assertEquals(emailHint2.getText(), "Пользователь с логином " + TXT_NOT_VALID_USERNAME + " не зарегистрирован");
 
-
+        //verify that error message is shown
+        WebElement emailHint = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name("email_hint")));
+        Assert.assertEquals(emailHint.getText(), USER_NOT_EXIST_MESSAGE_1 + TXT_NOT_VALID_USERNAME + USER_NOT_EXIST_MESSAGE_2);
 
     }
 
+    @Test
+    public void LoginWIthInvalidPassword ()
 
+    {
+        HomePage home = new HomePage(driver);
+        LoginPage login = home.navigateToLoginPage(driver);
+        login.performLogin(VALID_USERNAME, INVALID_PASSWORD);
+
+        //verify that error message is shown
+        WebElement password_hint = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name("password_hint")));
+        Assert.assertEquals(password_hint.getText(), PASSWORD_IS_INCORRECT );
+    }
 }
