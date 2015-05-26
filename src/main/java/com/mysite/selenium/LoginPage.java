@@ -1,4 +1,5 @@
 package com.mysite.selenium;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -6,8 +7,6 @@ import org.openqa.selenium.WebElement;
 
 public class LoginPage {
     public WebDriver driver;
-
-
 
     public LoginPage (WebDriver driver)
     {
@@ -29,7 +28,8 @@ public class LoginPage {
 
 
         //verifying that user is logged in
-        if (driver.findElements(By.id("user_menu")).isEmpty()) System.out.println("user is not logged in");
+        WebElement profile = driver.findElement(By.name("signin"));
+
         return new HomePage (driver);
 
     }

@@ -32,7 +32,7 @@ class HomePage
         signInLink.click();
 
         //verifying that login window is opened
-        if (driver.findElements(By.name("login")).isEmpty()) System.out.println("no login name");
+        if (driver.findElements(By.name("login")).isEmpty()) driver.manage().logs() ;
 
         return new LoginPage (driver);
     }
