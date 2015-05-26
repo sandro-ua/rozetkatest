@@ -14,6 +14,7 @@ class HomePage
 {
     public static WebDriver driver;
     public static final String LOC_LNK_privateCabinet = "signin";
+    public static final String LOC_LNK_searchInput = "text";
     //public static final String TTL_homePageTitle = "»нтернет-магазин ROZETKAЩ: фототехника, видеотехника, аудиотехника, компьютеры и компьютерные комплектующие";
 
 
@@ -22,7 +23,7 @@ class HomePage
         this.driver = driver;
 
         WebElement myDynamicElement = (new WebDriverWait(driver, 5))
-                .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_privateCabinet)));
+                .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_searchInput)));
     }
 
 

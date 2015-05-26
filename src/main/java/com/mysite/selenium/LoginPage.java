@@ -3,10 +3,12 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class LoginPage {
-    public WebDriver driver;
+    public static WebDriver driver;
 
     public LoginPage (WebDriver driver)
     {
@@ -15,7 +17,7 @@ public class LoginPage {
 
 
 
-    public HomePage performLogin(String s_password, String s_username)
+    public HomePage performLogin (String s_password, String s_username)
     {
         WebElement username = driver.findElement(By.name("login"));
         WebElement password = driver.findElement(By.name("password"));
@@ -28,7 +30,9 @@ public class LoginPage {
 
 
         //verifying that user is logged in
-        WebElement profile = driver.findElement(By.name("signin"));
+        //WebElement myDynamicElement = (new WebDriverWait(driver, 5))
+        //        .until(ExpectedConditions.presenceOfElementLocated(By.name("profile")));
+
 
         return new HomePage (driver);
 

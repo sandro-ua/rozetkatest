@@ -1,14 +1,15 @@
 package com.mysite.selenium;
+import com.google.common.base.Verify;
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
 import org.junit.rules.TestName;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.io.File;
@@ -20,10 +21,10 @@ import java.util.Date;
 public class RozetkaTest {
 
     public static String LNK_START_LINK = "http://rozetka.com.ua/";
-    WebDriver driver = new FirefoxDriver();
+    public static WebDriver driver = new FirefoxDriver();
 
-    String date = new SimpleDateFormat("dd-MM-yyyy-hh-ss").format(new Date());
-    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+    public static String TXT_NOT_VALID_USERNAME = "q1w2e3@gmail.com";
+    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd_HH-mm-ss";
 
 
     // take screenshots
@@ -55,12 +56,12 @@ public class RozetkaTest {
 
     @BeforeClass
     public static void oneTimeSetUp() {
-        // one-time initialization code
+
     }
 
     @AfterClass
     public static void oneTimeTearDown() {
-
+        driver.quit();
     }
 
     @Before
@@ -70,19 +71,33 @@ public class RozetkaTest {
 
     @After
     public void tearDown() {
-        driver.quit();
+
     }
 
     @Test
-    public void LoginAsCustomer ()
+    public void LoginAsValidCustomer ()
     {
         HomePage home = new HomePage(driver);
         LoginPage login = home.navigateToLoginPage(driver);
         login.performLogin("qatestermailbox@gmail.com", "q1w2e3");
+        driver.quit();
 
     }
 
+    @Test
+    public void LoginWithWrongUsername()
 
+    {
+        HomePage home = new HomePage(driver);
+        LoginPage login = home.navigateToLoginPage(driver);
+        login.performLogin(TXT_NOT_VALID_USERNAME, "q1w2e3");
+        //WebElement emailHint = driver.findElement(By.name("email_hint"));
+        WebElement emailHint2 = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name("email_hint")));
+        Assert.assertEquals(emailHint2.getText(), "ѕользователь с логином " + TXT_NOT_VALID_USERNAME + " не зарегистрирован");
+
+
+
+    }
 
 
 }
