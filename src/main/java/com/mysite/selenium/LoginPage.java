@@ -23,19 +23,15 @@ public class LoginPage {
         WebElement password = driver.findElement(By.name("password"));
         WebElement submit = driver.findElement(By.name("auth_submit"));
 
-
         username.sendKeys(s_password);
         password.sendKeys(s_username);
         submit.click();
-
 
         //verifying that user is logged in
         //WebElement myDynamicElement = (new WebDriverWait(driver, 5))
         //        .until(ExpectedConditions.presenceOfElementLocated(By.name("profile")));
 
-
         return new HomePage (driver);
-
     }
 
 

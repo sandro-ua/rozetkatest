@@ -16,6 +16,8 @@ class HomePage
     public static final String LOC_LNK_privateCabinet = "signin";
     public static final String LOC_LNK_searchInput = "text";
 
+    public static final String LOC_LNK_CATEGORY_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
+
 
     public HomePage (WebDriver driver)
     {
@@ -37,12 +39,13 @@ class HomePage
         return new LoginPage (driver);
     }
 
-    public CategoryPage navigateToSpecificCategory (WebDriver driver)
+    public CategoryPage navigateToSpecificCategory (WebDriver driver, String categoryLink)
     {
+        WebElement categoryElement = driver.findElement(By.xpath("//a[@href='" + categoryLink + "']"));
+        categoryElement.click();
 
-
-
-        return new CategoryPage();
+        return new CategoryPage(driver);
     }
+
 
 }

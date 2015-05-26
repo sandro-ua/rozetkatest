@@ -32,6 +32,10 @@ public class RozetkaTest {
     public static final String USER_NOT_EXIST_MESSAGE_2 = " не зарегистрирован";
     public static final String PASSWORD_IS_INCORRECT = "Введен неверный пароль!";
 
+    public static final String LNK_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
+    public static final String LNK_SUB_TOURISM_TENTS = "http://rozetka.com.ua/tents/c82412/";
+
+
     //logger
     private final Logger slf4jLogger = LoggerFactory.getLogger(RozetkaTest.class);
 
@@ -119,4 +123,15 @@ public class RozetkaTest {
         WebElement password_hint = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name("password_hint")));
         Assert.assertEquals(password_hint.getText(), PASSWORD_IS_INCORRECT );
     }
+
+    @Test
+    public void NavigateToCategory()
+    {
+        HomePage home = new HomePage(driver);
+        CategoryPage catPage = home.navigateToSpecificCategory(driver, LNK_TOURISM);
+        catPage.selectSubCategory(LNK_SUB_TOURISM_TENTS);
+
+    }
+
+
 }
