@@ -6,12 +6,10 @@ import org.openqa.selenium.WebElement;
 
 
 public class CategoryPage {
-
     public static WebDriver driver;
 
 
-public CategoryPage (WebDriver driver)
-{
+public CategoryPage (WebDriver driver) {
     this.driver = driver;
 }
 

@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 
-
 public class LoginPage {
     public static WebDriver driver;
 
@@ -13,7 +12,6 @@ public class LoginPage {
     {
         this.driver = driver;
     }
-
 
 
     public HomePage performLogin (String s_password, String s_username)

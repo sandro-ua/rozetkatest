@@ -29,6 +29,8 @@ public class RozetkaTest {
     public static final String USER_NOT_EXIST_MESSAGE_1 = "Пользователь с логином ";
     public static final String USER_NOT_EXIST_MESSAGE_2 = " не зарегистрирован";
     public static final String PASSWORD_IS_INCORRECT = "Введен неверный пароль!";
+    public static final String PASSWORD_HINT = "password_hint";
+
 
     public static final String LNK_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
     public static final String LNK_SUB_TOURISM_TENTS = "http://rozetka.com.ua/tents/c82412/";
@@ -100,7 +102,7 @@ public class RozetkaTest {
         login.performLogin(TXT_NOT_VALID_USERNAME, "q1w2e3");
 
         //verify that error message is shown
-        WebElement emailHint = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name("email_hint")));
+        WebElement emailHint = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name(PASSWORD_HINT)));
         Assert.assertEquals(emailHint.getText(), USER_NOT_EXIST_MESSAGE_1 + TXT_NOT_VALID_USERNAME + USER_NOT_EXIST_MESSAGE_2);
 
     }
@@ -114,7 +116,7 @@ public class RozetkaTest {
         login.performLogin(VALID_USERNAME, INVALID_PASSWORD);
 
         //verify that error message is shown
-        WebElement password_hint = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name("password_hint")));
+        WebElement password_hint = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name(PASSWORD_HINT)));
         Assert.assertEquals(password_hint.getText(), PASSWORD_IS_INCORRECT );
     }
 
