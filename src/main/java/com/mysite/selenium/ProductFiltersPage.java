@@ -15,6 +15,8 @@ public class ProductFiltersPage {
         this.driver = driver;
     }
 
+
+    //todo: finish method
     public ProductFiltersPage applySorting (String sortingType)
 
     {

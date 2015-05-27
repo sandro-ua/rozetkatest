@@ -1,16 +1,15 @@
 package com.mysite.selenium;
 
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-    public class SearchResultsPage {
+public class SearchResultsPage {
         public static WebDriver driver;
         public static final String LOC_LNK_SHOW_MORE = "button_text";
 
@@ -49,24 +48,32 @@ import java.util.List;
             return pages;
         }
 
-        //clicks Get more items till all are shown
+        //clicks 'Get more items' button till all are shown
         public List GetResultsFromAllPages (WebDriver driver)
         {
-            //WebElement more = driver.findElement(By.name(LOC_LNK_SHOW_MORE));
-            List allResults = new ArrayList();
+            if (GetNumberOfPages(driver)>1) {
+                //WebElement more = driver.findElement(By.name(LOC_LNK_SHOW_MORE));
+                List allResults;
 
+                while (isPresentAndDisplayed(driver.findElement(By.name(LOC_LNK_SHOW_MORE))) == true) {
+                    driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+                    driver.findElement(By.name(LOC_LNK_SHOW_MORE)).click();
+                }
 
-            while (driver.findElement(By.name(LOC_LNK_SHOW_MORE)).isDisplayed())
-            {
-                WebElement showMore = (new WebDriverWait(driver, 5))
-                        .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_SHOW_MORE)));
-                showMore.click();
-            }
-
-            allResults = GetResultsFromFirstPage(driver);
-            return allResults;
+                allResults = GetResultsFromFirstPage(driver);
+                return allResults;
+            } else return GetResultsFromFirstPage(driver);
         }
 
-
-
+        public static boolean isPresentAndDisplayed (WebElement element) {
+            try {
+                driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+                return element.isDisplayed();
+            } catch (NoSuchElementException e) {
+                return false;
+            }
+            catch (StaleElementReferenceException e){
+                return false;
+            }
+        }
     }
