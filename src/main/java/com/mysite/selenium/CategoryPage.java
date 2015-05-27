@@ -21,6 +21,7 @@ public CategoryPage (WebDriver driver)
       WebElement categoryElement = driver.findElement(By.xpath("//a[@href='" + subCategoryLink + "']"));
       categoryElement.click();
       return new CategoryPage(driver);
+
   }
 
 

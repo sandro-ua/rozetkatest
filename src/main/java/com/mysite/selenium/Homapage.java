@@ -15,16 +15,19 @@ class HomePage
     public static WebDriver driver;
     public static final String LOC_LNK_privateCabinet = "signin";
     public static final String LOC_LNK_searchInput = "text";
+    public static final String LOC_LNK_searchSubmitButton = "search-button";
 
     public static final String LOC_LNK_CATEGORY_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
+
+    WebElement searchInput = (new WebDriverWait(driver, 5))
+            .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_searchInput)));
+    WebElement searchSubmitButton = (new WebDriverWait(driver, 5))
+            .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_searchSubmitButton)));
 
 
     public HomePage (WebDriver driver)
     {
         this.driver = driver;
-
-        WebElement myDynamicElement = (new WebDriverWait(driver, 5))
-                .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_searchInput)));
     }
 
 
@@ -47,5 +50,13 @@ class HomePage
         return new CategoryPage(driver);
     }
 
+    public SearchResultsPage performSearch (WebDriver driver, String searchTerm)
+
+    {
+        searchInput.sendKeys(searchTerm);
+        searchSubmitButton.click();
+
+        return new SearchResultsPage(driver);
+    }
 
 }

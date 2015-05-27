@@ -21,7 +21,7 @@ public class ProductFiltersPage {
         WebElement sortingDropdown = driver.findElement(By.name("drop_link"));
         sortingDropdown.click();
         WebElement sortingDropdownItem = driver.findElement(By.xpath("//li/a[contains(@href, 'sort=" + sortingType + "')]"));
-        
+
         return new ProductFiltersPage(driver);
     }
 

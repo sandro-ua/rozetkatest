@@ -34,7 +34,7 @@ public class RozetkaTest {
 
     public static final String LNK_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
     public static final String LNK_SUB_TOURISM_TENTS = "http://rozetka.com.ua/tents/c82412/";
-
+    public static final String TXT_SEARCH_TERM = "samsung s4";
 
     //logger
     private final Logger slf4jLogger = LoggerFactory.getLogger(RozetkaTest.class);
@@ -132,6 +132,18 @@ public class RozetkaTest {
         catPage.selectSubCategory(LNK_SUB_TOURISM_TENTS);
 
     }
+
+    @Test
+    public void SearchProduct()
+    {
+        HomePage home = new HomePage(driver);
+        SearchResultsPage searchProductResultsPage = home.performSearch(driver, TXT_SEARCH_TERM);
+
+
+
+    }
+
+
 
 
 }
