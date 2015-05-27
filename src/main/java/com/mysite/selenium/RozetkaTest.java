@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class RozetkaTest {
 
     public static final String LNK_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
     public static final String LNK_SUB_TOURISM_TENTS = "http://rozetka.com.ua/tents/c82412/";
-    public static final String TXT_SEARCH_TERM = "samsung s4";
+    public static final String TXT_SEARCH_TERM = "samsung s4 mini";
 
     //logger
     private final Logger slf4jLogger = LoggerFactory.getLogger(RozetkaTest.class);
@@ -136,11 +137,10 @@ public class RozetkaTest {
     @Test
     public void SearchProduct()
     {
-        HomePage home = new HomePage(driver);
-        SearchResultsPage searchProductResultsPage = home.performSearch(driver, TXT_SEARCH_TERM);
 
-
-
+        HomePage home= new HomePage(driver);
+        SearchResultsPage resultsPage = home.performSearch(driver, TXT_SEARCH_TERM);
+        resultsPage.GetResultsFromFirstPage(driver);
     }
 
 

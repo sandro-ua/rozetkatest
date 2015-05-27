@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.TakesScreenshot;
 
 
 class HomePage
@@ -19,10 +17,8 @@ class HomePage
 
     public static final String LOC_LNK_CATEGORY_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
 
-    WebElement searchInput = (new WebDriverWait(driver, 5))
-            .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_searchInput)));
-    WebElement searchSubmitButton = (new WebDriverWait(driver, 5))
-            .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_searchSubmitButton)));
+
+
 
 
     public HomePage (WebDriver driver)
@@ -53,6 +49,12 @@ class HomePage
     public SearchResultsPage performSearch (WebDriver driver, String searchTerm)
 
     {
+        WebElement searchInput = (new WebDriverWait(driver, 5))
+                .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_searchInput)));
+        WebElement searchSubmitButton = (new WebDriverWait(driver, 5))
+                .until(ExpectedConditions.presenceOfElementLocated(By.name(LOC_LNK_searchSubmitButton)));
+
+
         searchInput.sendKeys(searchTerm);
         searchSubmitButton.click();
 
