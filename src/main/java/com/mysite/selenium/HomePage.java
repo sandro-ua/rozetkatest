@@ -7,13 +7,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-class HomePage
+public class HomePage
 
 {
     public static WebDriver driver;
     public static final String LOC_LNK_privateCabinet = "signin";
     public static final String LOC_LNK_searchInput = "text";
     public static final String LOC_LNK_searchSubmitButton = "search-button";
+    public static final String LOC_LNK_cart = "//a[@href = 'https://my.rozetka.com.ua/cart/']";
 
     public static final String LOC_LNK_CATEGORY_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
 
@@ -53,6 +54,15 @@ class HomePage
         searchSubmitButton.click();
 
         return new SearchResultsPage(driver);
+    }
+
+    public CartPage openCart (WebDriver driver)
+    {
+
+        WebElement cart = driver.findElement(By.xpath(LOC_LNK_cart));
+        cart.click();
+        return new CartPage(driver);
+
     }
 
 }

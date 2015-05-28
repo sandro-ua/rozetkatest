@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +22,6 @@ public class RozetkaTest {
 
     public static String LNK_START_LINK = "http://rozetka.com.ua/";
     public static WebDriver driver = new FirefoxDriver();
-
 
     public static final String VALID_USERNAME = "qatestermailbox@gmail.com";
     public static final String INVALID_PASSWORD = "a";
@@ -34,6 +35,12 @@ public class RozetkaTest {
 
     public static final String LNK_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
     public static final String LNK_SUB_TOURISM_TENTS = "http://rozetka.com.ua/tents/c82412/";
+
+    //several links with products
+    public static final String LNK_PRD_TENT = "http://rozetka.com.ua/terra_incognita_ksena3alu/p82522/";
+    public static final String LNK_PRD_BALL = "http://rozetka.com.ua/reflex_field/p1743697/";
+    public static final String LNK_PRD_BYCICLE = "http://rozetka.com.ua/author_1300087/p2983055/";
+
     public static final String TXT_SEARCH_TERM = "asus tablet";
 
     // take screenshots
@@ -162,11 +169,37 @@ public class RozetkaTest {
     @Test
     public void GetDetailsFromProductPage()
     {
-        ProductDetails prodDetails = new ProductDetails(driver);
+        ProductDetailsPage prodDetails = new ProductDetailsPage(driver);
         driver.get("http://rozetka.com.ua/terra_incognita_ksena3alu/p82522/");
-        int a = 4459;
-        assert (a == prodDetails.GetPrice(driver));
-
+        int expextedPrice = 4459;
+        assert (expextedPrice == prodDetails.GetPrice(driver));
 
     }
+
+    @Test
+    public void AddingRemovingProductsToFromCart ()
+
+    {
+        ProductDetailsPage productDetails = new ProductDetailsPage(driver);
+        HomePage home = new HomePage(driver);
+        CartPage cart;
+
+        List <String> linksToProducts = new ArrayList();
+        linksToProducts.add(LNK_PRD_BALL);
+        linksToProducts.add(LNK_PRD_BYCICLE);
+        linksToProducts.add(LNK_PRD_TENT);
+
+        for (int i = 0; i< linksToProducts.size(); i++)
+        {
+            driver.get (linksToProducts.get(i));
+            productDetails.addProductToCart(driver);
+        }
+
+        cart = home.openCart(driver);
+        cart.removeAllProductFromCart(driver);
+
+    }
+
+
+
 }
