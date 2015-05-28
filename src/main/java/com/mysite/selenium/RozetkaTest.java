@@ -158,4 +158,15 @@ public class RozetkaTest {
         List results = resultsPage.GetResultsFromAllPages(driver);
         assert (results.size() == resultsPage.getNumberOfResults(driver));
     }
+
+    @Test
+    public void GetDetailsFromProductPage()
+    {
+        ProductDetails prodDetails = new ProductDetails(driver);
+        driver.get("http://rozetka.com.ua/terra_incognita_ksena3alu/p82522/");
+        int a = 4459;
+        assert (a == prodDetails.GetPrice(driver));
+
+
+    }
 }

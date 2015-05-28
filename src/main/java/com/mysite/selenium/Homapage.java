@@ -17,15 +17,9 @@ class HomePage
 
     public static final String LOC_LNK_CATEGORY_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
 
-
-
-
-
-    public HomePage (WebDriver driver)
-    {
+    public HomePage (WebDriver driver)     {
         this.driver = driver;
     }
-
 
     public LoginPage navigateToLoginPage (WebDriver driver)
     {
