@@ -1,10 +1,6 @@
 package com.mysite.selenium;
 
-
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +16,6 @@ public class SearchResultsPage {
             this.driver = driver;
         }
 
-
         //returns an array of found product's titles at one\first page
         public List GetResultsFromFirstPage(WebDriver driver) {
             int pagesCount = getNumberOfResults(driver);
@@ -33,7 +28,6 @@ public class SearchResultsPage {
             return results;
         }
 
-
         //returns count of found products
         public int getNumberOfResults(WebDriver driver) {
             WebElement resultsNumber = driver.findElement(By.className(LOC_LNK_SEARCH_RESULT_COUNT));
@@ -43,7 +37,6 @@ public class SearchResultsPage {
             int count = Integer.parseInt(countStr);
             return count;
         }
-
 
         //returns number of pages
         public int GetNumberOfPages(WebDriver driver) {

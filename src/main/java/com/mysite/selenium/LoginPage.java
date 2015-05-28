@@ -13,7 +13,6 @@ public class LoginPage {
         this.driver = driver;
     }
 
-
     public HomePage performLogin (String s_password, String s_username)
     {
         WebElement username = driver.findElement(By.name("login"));
@@ -24,12 +23,10 @@ public class LoginPage {
         password.sendKeys(s_username);
         submit.click();
 
-        //verifying that user is logged in
-        //WebElement myDynamicElement = (new WebDriverWait(driver, 5))
-        //        .until(ExpectedConditions.presenceOfElementLocated(By.name("profile")));
-
         return new HomePage (driver);
     }
+
+
 
 
 

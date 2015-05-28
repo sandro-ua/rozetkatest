@@ -11,12 +11,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 public class RozetkaTest {
 
@@ -27,20 +25,21 @@ public class RozetkaTest {
     public static final String INVALID_PASSWORD = "a";
     public static final String TXT_NOT_VALID_USERNAME = "q1w2e373@gmail.com";
     public static final String DATE_FORMAT_NOW = "yyyy-MM-dd_HH-mm-ss";
+    public static final String USER_NAME = "Alex";
     public static final String USER_NOT_EXIST_MESSAGE_1 = "Пользователь с логином ";
     public static final String USER_NOT_EXIST_MESSAGE_2 = " не зарегистрирован";
     public static final String PASSWORD_IS_INCORRECT = "Введен неверный пароль!";
+    public static final String EMAIL_HINT = "email_hint";
     public static final String PASSWORD_HINT = "password_hint";
-
 
     public static final String LNK_TOURISM = "http://rozetka.com.ua/outdoorsman/c81202/";
     public static final String LNK_SUB_TOURISM_TENTS = "http://rozetka.com.ua/tents/c82412/";
+    public static final String LNK_SUB_TOURISM_TENTS_NAME = "Палатки";
 
     //several links with products
     public static final String LNK_PRD_TENT = "http://rozetka.com.ua/terra_incognita_ksena3alu/p82522/";
     public static final String LNK_PRD_BALL = "http://rozetka.com.ua/reflex_field/p1743697/";
     public static final String LNK_PRD_BYCICLE = "http://rozetka.com.ua/author_1300087/p2983055/";
-
     public static final String TXT_SEARCH_TERM = "asus tablet";
 
     // take screenshots
@@ -65,7 +64,6 @@ public class RozetkaTest {
         }
     };
 
-
     //getting the test name for scr name
     @Rule
     public TestName name= new TestName();
@@ -87,7 +85,6 @@ public class RozetkaTest {
 
     @After
     public void tearDown() {
-
     }
 
     @Test
@@ -96,54 +93,54 @@ public class RozetkaTest {
         HomePage home = new HomePage(driver);
         LoginPage login = home.navigateToLoginPage(driver);
         login.performLogin("qatestermailbox@gmail.com", "q1w2e3");
-        //user is logged in
-
+        Assert.assertTrue(home.getLoggeInCUsomerName(driver) == USER_NAME); //test failed on assertion.
+        // In debug mode I see "Alex" and "Alex". Strange, have to investigate it more.
     }
 
     @Test
     public void LoginWithNotExistingUsername()
-
     {
         HomePage home = new HomePage(driver);
         LoginPage login = home.navigateToLoginPage(driver);
         login.performLogin(TXT_NOT_VALID_USERNAME, "q1w2e3");
 
         //verify that error message is shown
-        WebElement emailHint = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name(PASSWORD_HINT)));
-        Assert.assertEquals(emailHint.getText(), USER_NOT_EXIST_MESSAGE_1 + TXT_NOT_VALID_USERNAME + USER_NOT_EXIST_MESSAGE_2);
+        WebElement emailHint = (new WebDriverWait(driver, 5))
+                .until(ExpectedConditions.presenceOfElementLocated(By.name(EMAIL_HINT)));
 
+        Assert.assertEquals(emailHint.getText(), USER_NOT_EXIST_MESSAGE_1 +
+                TXT_NOT_VALID_USERNAME + USER_NOT_EXIST_MESSAGE_2);
     }
 
     @Test
     public void LoginWIthInvalidPassword ()
-
     {
         HomePage home = new HomePage(driver);
         LoginPage login = home.navigateToLoginPage(driver);
         login.performLogin(VALID_USERNAME, INVALID_PASSWORD);
 
         //verify that error message is shown
-        WebElement password_hint = (new WebDriverWait(driver, 5)) .until(ExpectedConditions.presenceOfElementLocated(By.name(PASSWORD_HINT)));
+        WebElement password_hint = (new WebDriverWait(driver, 5))
+                .until(ExpectedConditions.presenceOfElementLocated(By.name(PASSWORD_HINT)));
         Assert.assertEquals(password_hint.getText(), PASSWORD_IS_INCORRECT );
     }
 
     @Test
-    public void NavigateToCategory()
+    public void NavigateToSubCategory()
     {
         HomePage home = new HomePage(driver);
         CategoryPage catPage = home.navigateToSpecificCategory(driver, LNK_TOURISM);
         catPage.selectSubCategory(LNK_SUB_TOURISM_TENTS);
+        Assert.assertEquals(catPage.getSubTitleText(), LNK_SUB_TOURISM_TENTS_NAME);
 
     }
 
     @Test
     public void SearchProductFirstPageResults()
     {
-
         HomePage home= new HomePage(driver);
         SearchResultsPage resultsPage = home.performSearch(driver, TXT_SEARCH_TERM);
         resultsPage.GetResultsFromFirstPage(driver);
-
     }
 
     @Test
@@ -170,10 +167,9 @@ public class RozetkaTest {
     public void GetDetailsFromProductPage()
     {
         ProductDetailsPage prodDetails = new ProductDetailsPage(driver);
-        driver.get("http://rozetka.com.ua/terra_incognita_ksena3alu/p82522/");
+        driver.get("LNK_PRD_BALL");
         int expextedPrice = 4459;
         assert (expextedPrice == prodDetails.GetPrice(driver));
-
     }
 
     @Test
@@ -181,8 +177,8 @@ public class RozetkaTest {
 
     {
         ProductDetailsPage productDetails = new ProductDetailsPage(driver);
-        HomePage home = new HomePage(driver);
-        CartPage cart;
+
+        CartPage cart = new CartPage(driver);
 
         List <String> linksToProducts = new ArrayList();
         linksToProducts.add(LNK_PRD_BALL);
@@ -192,14 +188,8 @@ public class RozetkaTest {
         for (int i = 0; i< linksToProducts.size(); i++)
         {
             driver.get (linksToProducts.get(i));
-            productDetails.addProductToCart(driver);
+            cart = productDetails.addProductToCart(driver);
         }
-
-        cart = home.openCart(driver);
         cart.removeAllProductFromCart(driver);
-
     }
-
-
-
 }

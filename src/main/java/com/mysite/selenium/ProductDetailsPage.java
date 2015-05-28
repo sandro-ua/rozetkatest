@@ -34,4 +34,5 @@ public class ProductDetailsPage {
         return new CartPage(driver);
     }
 
+
 }
